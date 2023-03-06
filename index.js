@@ -19,12 +19,14 @@ let allowCrossDomain = function(req, res, next) {
 }
 
 app.use(allowCrossDomain);
-
+app.use(express.static('public'))
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(cors());
 
-
+app.get('/', (req, res) => {
+    res.sendFile('index.html', {root: path.join(__dirname, 'public')});
+  })
 
 mongoose.connect(URI)
 .then(() => console.log('connected to Database'))
