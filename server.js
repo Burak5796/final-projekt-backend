@@ -1,24 +1,39 @@
 import express from "express";
+import mongoose from "mongoose";
+import dotenv from 'dotenv'; dotenv.config();
+import morgan from 'morgan';
+import cors from 'cors';
+import router from "./components/routes.js";
 
 
 
 const app = express();
-const PORT = 4120;
+const PORT = 4000;
+const URI = process.env.MONGO;
+
+
+let allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Headers', "*");
+    next();
+}
+
+app.use(allowCrossDomain);
+
+app.use(express.json());
+app.use(morgan('dev'));
+app.use(cors());
 
 
 
-const options = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': '6c91afbac5msh4d1f8b9334e7aeap153f91jsn21301dfe0c00',
-		'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
-	}
-};
+mongoose.connect(URI)
+.then(() => console.log('connected to Database'))
+.catch(() => console.log('unable to connect to Database'));
 
-fetch('https://api-football-v1.p.rapidapi.com/v3/timezone', options)
-	.then(response => response.json())
-	.then(response => console.log(response))
-	.catch(err => console.error(err));
+
+mongoose.connection.on('error', console.log);
+
+app.use(router)
 
 
 app.listen(PORT,() => {
