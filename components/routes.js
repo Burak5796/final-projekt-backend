@@ -11,7 +11,7 @@ router
     .get(getCity)
 
 router
-    .route('/')
+    .route('/get')
     .post(postOne)
     .get(getAll)
 
