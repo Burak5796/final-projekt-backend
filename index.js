@@ -8,7 +8,7 @@ import router from "./components/routes.js";
 
 
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT || 3000;
 const URI = process.env.MONGO;
 
 
