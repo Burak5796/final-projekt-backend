@@ -86,7 +86,7 @@ const cities = new Schema(
         },
     
          description:{
-            type: Array,
+            type: String,
             required:true
         },
 
