@@ -85,8 +85,8 @@ const cities = new Schema(
             required:true
         },
     
-         population:{
-            type: String,
+         description:{
+            type: Array,
             required:true
         },
 
